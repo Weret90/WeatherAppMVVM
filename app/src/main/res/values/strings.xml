@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">New Weather App</string>
+    <string name="today">Сегодня</string>
+    <string name="date">Дата</string>
+    <string name="temperature">Температура</string>
+    <string name="status">На улице</string>
+    <string name="fragment_cities_headline">Прогноз погоды</string>
+</resources>

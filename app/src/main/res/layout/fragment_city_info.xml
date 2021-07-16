@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/weather">
+
+    <TextView
+        android:id="@+id/cityName"
+        style="@style/headline_style"
+        app:layout_constraintBottom_toTopOf="@id/table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tool:text="Москва" />
+
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                style="@style/table_style"
+                android:layout_weight="1.2"
+                android:text="@string/date" />
+
+            <TextView
+                style="@style/table_style"
+                android:layout_weight="1"
+                android:text="@string/today" />
+
+            <TextView
+                android:id="@+id/tomorrowDay"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="17.07" />
+
+            <TextView
+                android:id="@+id/afterTomorrowDay"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="18.07" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                style="@style/table_style"
+                android:layout_weight="1.2"
+                android:text="@string/temperature" />
+
+            <TextView
+                android:id="@+id/currentTemperature"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="18°C" />
+
+            <TextView
+                android:id="@+id/tomorrowTemperature"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="19°C" />
+
+            <TextView
+                android:id="@+id/afterTomorrowTemperature"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="20°C" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                style="@style/table_style"
+                android:layout_weight="1.2"
+                android:text="@string/status" />
+
+            <TextView
+                android:id="@+id/currentStatus"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="Облачно" />
+
+            <TextView
+                android:id="@+id/tomorrowStatus"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="Ясно" />
+
+            <TextView
+                android:id="@+id/afterTomorrowStatus"
+                style="@style/table_style"
+                android:layout_weight="1"
+                tool:text="Дождь" />
+        </TableRow>
+
+
+    </TableLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
