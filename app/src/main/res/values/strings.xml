@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">New Weather App</string>
-    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="afterTomorrow">Послезавтра</string>
     <string name="date">Дата</string>
     <string name="temperature">Температура</string>
     <string name="status">На улице</string>
     <string name="fragment_cities_headline">Прогноз погоды</string>
+    <string name="weather_icon_description">Иконка текущей погоды</string>
+    <string name="app_wallpaper_description">App wallpaper</string>
+
 </resources>

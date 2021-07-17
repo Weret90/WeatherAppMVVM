@@ -1,34 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/default_margin"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="@dimen/default_corner_radius"
+    app:cardElevation="0dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey">
 
-    <TextView
-        android:id="@+id/textViewName"
-        style="@style/city_item_style"
-        android:layout_weight="2"
-        android:textColor="@color/white"
-        tool:text="Москва"
-        tool:textColor="@color/black" />
+        <TextView
+            android:id="@+id/textViewName"
+            style="@style/city_item_style"
+            android:layout_weight="0.5"
+            android:textColor="@color/white"
+            tool:text="Москва"
+            tool:textColor="@color/black" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewStatus"
-        style="@style/city_item_style"
-        android:layout_weight="1"
-        android:textColor="@color/white"
-        tool:text="Облачно"
-        tool:textColor="@color/black" />
+            <ImageView
+                android:id="@+id/iconImage"
+                android:layout_width="@dimen/default_icon_size"
+                android:layout_height="@dimen/default_icon_size"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/default_margin"
+                android:contentDescription="@string/weather_icon_description" />
 
+            <TextView
+                android:id="@+id/textViewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tool:text="Облачно"
+                tool:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/textViewTemperature"
-        style="@style/city_item_style"
-        android:layout_weight="1"
-        android:textColor="@color/white"
-        tool:text="20°С"
-        tool:textColor="@color/black" />
+        </LinearLayout>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textViewTemperature"
+            style="@style/city_item_style"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/headline_text_size"
+            tool:text="20°С"
+            tool:textColor="@color/black" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
