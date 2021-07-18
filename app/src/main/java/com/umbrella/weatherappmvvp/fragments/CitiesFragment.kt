@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +19,7 @@ class CitiesFragment : Fragment() {
 
     private lateinit var adapter: CitiesAdapter
     private var cities: List<City> = ArrayList()
+    private lateinit var infoTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +31,7 @@ class CitiesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        infoTextView = view.findViewById(R.id.infoTextView)
         adapter = CitiesAdapter()
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewCities)
         recyclerView.adapter = adapter
@@ -43,17 +46,22 @@ class CitiesFragment : Fragment() {
             initViewModel()
         } else {
             adapter.updateData(cities)
+            infoTextView.visibility = View.GONE
         }
     }
 
     private fun initViewModel() {
         val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         viewModel.citiesLiveData.observe(viewLifecycleOwner, {
-            if (it != null) {
+            if (it != null && it.isNotEmpty()) {
                 adapter.updateData(it)
                 cities = it
-            } else {
-                Toast.makeText(context, "Error in getting data", Toast.LENGTH_SHORT).show()
+                infoTextView.visibility = View.GONE
+            }
+        })
+        viewModel.errorLiveData.observe(viewLifecycleOwner, {
+            if (it != null) {
+                infoTextView.text = "Ошибка получения данных. Проверьте интернет-соединение"
             }
         })
         viewModel.makeApiCall()

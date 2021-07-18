@@ -8,5 +8,6 @@
     <string name="fragment_cities_headline">Прогноз погоды</string>
     <string name="weather_icon_description">Иконка текущей погоды</string>
     <string name="app_wallpaper_description">App wallpaper</string>
+    <string name="loading_data">Идет загрузка данных…</string>
 
 </resources>

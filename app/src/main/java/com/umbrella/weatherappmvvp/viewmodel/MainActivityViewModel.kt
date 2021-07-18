@@ -7,10 +7,12 @@ import com.umbrella.weatherappmvvp.models.City
 import com.umbrella.weatherappmvvp.network.RetroInstance
 import com.umbrella.weatherappmvvp.network.RetroService
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class MainActivityViewModel : ViewModel() {
 
     val citiesLiveData = MutableLiveData<List<City>>()
+    val errorLiveData = MutableLiveData<String>()
 
     fun makeApiCall() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -18,19 +20,31 @@ class MainActivityViewModel : ViewModel() {
             val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
             joinAll(
                 launch {
-                    val response1 = retroInstance.getDataFromApi("55.75", "37.61")
-                    response1.name = "Москва"
-                    cities.add(response1)
+                    try {
+                        val response1 = retroInstance.getDataFromApi("55.75", "37.61")
+                        response1.name = "Москва"
+                        cities.add(response1)
+                    } catch (e: Exception) {
+                        errorLiveData.postValue("error")
+                    }
                 },
                 launch {
-                    val response2 = retroInstance.getDataFromApi("59.93", "30.33")
-                    response2.name = "Санкт-Петербург"
-                    cities.add(response2)
+                    try {
+                        val response2 = retroInstance.getDataFromApi("59.93", "30.33")
+                        response2.name = "Санкт-Петербург"
+                        cities.add(response2)
+                    } catch (e: Exception) {
+                        errorLiveData.postValue("error")
+                    }
                 },
                 launch {
-                    val response3 = retroInstance.getDataFromApi("62.03", "129.67")
-                    response3.name = "Якутск"
-                    cities.add(response3)
+                    try {
+                        val response3 = retroInstance.getDataFromApi("62.03", "129.67")
+                        response3.name = "Якутск"
+                        cities.add(response3)
+                    } catch (e: Exception) {
+                        errorLiveData.postValue("error")
+                    }
                 }
             )
             citiesLiveData.postValue(cities)
