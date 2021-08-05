@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/wallpaper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_wallpaper_description"
-        android:scaleType="centerCrop"
-        android:src="@drawable/wallpaperweather" />
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaperweather">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,15 +17,6 @@
             android:text="@string/fragment_cities_headline"
             android:textStyle="normal" />
 
-        <TextView
-            android:id="@+id/infoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/loading_data"
-            android:textColor="@color/white"
-            tool:visibility="gone" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCities"
             android:layout_width="match_parent"
@@ -40,6 +24,22 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wallpaperweather"
+        tools:visibility="gone"
+        >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
 
 
 </FrameLayout>

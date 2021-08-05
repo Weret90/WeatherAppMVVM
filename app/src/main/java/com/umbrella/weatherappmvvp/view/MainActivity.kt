@@ -1,7 +1,8 @@
-package com.umbrella.weatherappmvvp
+package com.umbrella.weatherappmvvp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.umbrella.weatherappmvvp.R
 
 class MainActivity : AppCompatActivity() {
 

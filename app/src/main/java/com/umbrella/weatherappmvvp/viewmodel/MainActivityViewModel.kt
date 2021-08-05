@@ -1,53 +1,52 @@
 package com.umbrella.weatherappmvvp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.umbrella.weatherappmvvp.models.City
-import com.umbrella.weatherappmvvp.network.RetroInstance
-import com.umbrella.weatherappmvvp.network.RetroService
+import com.umbrella.weatherappmvvp.model.City
+import com.umbrella.weatherappmvvp.model.network.RetroInstance
+import com.umbrella.weatherappmvvp.model.network.RetroService
 import kotlinx.coroutines.*
 import java.lang.Exception
 
 class MainActivityViewModel : ViewModel() {
 
-    val citiesLiveData = MutableLiveData<List<City>>()
-    val errorLiveData = MutableLiveData<String>()
+    private val citiesLiveDate = MutableLiveData<List<City>>()
 
-    fun makeApiCall() {
+    companion object {
+        private val cities = ArrayList<City>()
+        private val LOCK = Any()
+        private const val CITIES_NUMBER = 3
+        private var isError = false
+    }
+
+    fun getCitiesLiveData() = citiesLiveDate
+
+    fun makeApiCall(lat: String, lon: String, cityName: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val cities = mutableListOf<City>()
-            val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
-            joinAll(
-                launch {
-                    try {
-                        val response1 = retroInstance.getDataFromApi("55.75", "37.61")
-                        response1.name = "Москва"
-                        cities.add(response1)
-                    } catch (e: Exception) {
-                        errorLiveData.postValue("error")
-                    }
-                },
-                launch {
-                    try {
-                        val response2 = retroInstance.getDataFromApi("59.93", "30.33")
-                        response2.name = "Санкт-Петербург"
-                        cities.add(response2)
-                    } catch (e: Exception) {
-                        errorLiveData.postValue("error")
-                    }
-                },
-                launch {
-                    try {
-                        val response3 = retroInstance.getDataFromApi("62.03", "129.67")
-                        response3.name = "Якутск"
-                        cities.add(response3)
-                    } catch (e: Exception) {
-                        errorLiveData.postValue("error")
+            try {
+                if (cities.size < CITIES_NUMBER) {
+                    val retroInstance =
+                        RetroInstance.getRetroInstance().create(RetroService::class.java)
+                    val response = retroInstance.getDataFromApi(lat, lon)
+                    response.cityName = cityName
+                    synchronized(LOCK) {
+                        cities.add(response)
+                        if (cities.size == CITIES_NUMBER) {
+                            citiesLiveDate.postValue(cities)
+                        }
                     }
                 }
-            )
-            citiesLiveData.postValue(cities)
+            } catch (e: Exception) {
+                synchronized(LOCK) {
+                    if (!isError) {
+                        isError = true
+                        Log.i("proverka", e.toString())
+                    }
+                }
+            }
         }
     }
 }
+

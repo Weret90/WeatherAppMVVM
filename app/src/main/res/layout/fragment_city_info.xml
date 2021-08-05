@@ -3,22 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/wallpaper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_wallpaper_description"
-        android:scaleType="centerCrop"
-        android:src="@drawable/wallpaperweather"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaperweather">
 
     <TextView
-        android:id="@+id/cityName"
+        android:id="@+id/nameOfCity"
         style="@style/headline_style"
         android:layout_marginTop="@dimen/big_margin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +21,7 @@
         android:textSize="@dimen/big_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cityName"
+        app:layout_constraintTop_toBottomOf="@+id/nameOfCity"
         tool:text="18°C" />
 
     <TextView

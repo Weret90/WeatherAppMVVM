@@ -1,6 +1,6 @@
-package com.umbrella.weatherappmvvp.network
+package com.umbrella.weatherappmvvp.model.network
 
-import com.umbrella.weatherappmvvp.models.City
+import com.umbrella.weatherappmvvp.model.City
 import retrofit2.http.GET
 import retrofit2.http.Query
 

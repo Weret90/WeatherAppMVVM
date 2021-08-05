@@ -1,4 +1,4 @@
-package com.umbrella.weatherappmvvp.network
+package com.umbrella.weatherappmvvp.model.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

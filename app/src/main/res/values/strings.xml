@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">New Weather App</string>
+    <string name="app_name">New Weather App MVVM</string>
     <string name="tomorrow">Завтра</string>
     <string name="afterTomorrow">Послезавтра</string>
     <string name="date">Дата</string>
@@ -9,5 +9,7 @@
     <string name="weather_icon_description">Иконка текущей погоды</string>
     <string name="app_wallpaper_description">App wallpaper</string>
     <string name="loading_data">Идет загрузка данных…</string>
+
+    <string name="temperature_celsius">%s °C</string>
 
 </resources>

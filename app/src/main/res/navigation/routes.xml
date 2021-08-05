@@ -6,12 +6,12 @@
     app:startDestination="@id/citiesFragment">
     <fragment
         android:id="@+id/citiesFragment"
-        android:name="com.umbrella.weatherappmvvp.fragments.CitiesFragment"
+        android:name="com.umbrella.weatherappmvvp.view.fragments.CitiesFragment"
         android:label="fragment_cities"
         tools:layout="@layout/fragment_cities" />
     <fragment
         android:id="@+id/cityInfoFragment"
-        android:name="com.umbrella.weatherappmvvp.fragments.CityInfoFragment"
+        android:name="com.umbrella.weatherappmvvp.view.fragments.CityInfoFragment"
         android:label="fragment_city_info"
         tools:layout="@layout/fragment_city_info" />
 </navigation>
