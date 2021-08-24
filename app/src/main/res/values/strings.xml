@@ -5,11 +5,14 @@
     <string name="date">Дата</string>
     <string name="temperature">Температура</string>
     <string name="status">На улице</string>
-    <string name="fragment_cities_headline">Прогноз погоды</string>
+    <string name="table_with_cities_headline_success">Прогноз погоды</string>
     <string name="weather_icon_description">Иконка текущей погоды</string>
-    <string name="app_wallpaper_description">App wallpaper</string>
-    <string name="loading_data">Идет загрузка данных…</string>
+    <string name="app_wallpaper_description">Фоновая картинка</string>
 
     <string name="temperature_celsius">%s °C</string>
+    <string name="table_with_cities_headline_error">Ошибка скачивания данных</string>
+    <string name="icon_url_path">https://openweathermap.org/img/wn/%s@2x.png</string>
+    <string name="error">Ошибка</string>
+    <string name="reload">Перезагрузить</string>
 
 </resources>

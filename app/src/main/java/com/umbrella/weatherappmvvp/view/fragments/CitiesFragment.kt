@@ -9,19 +9,30 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.umbrella.weatherappmvvp.R
 import com.umbrella.weatherappmvvp.databinding.FragmentCitiesBinding
-import com.umbrella.weatherappmvvp.view.adapters.CitiesAdapter
+import com.umbrella.weatherappmvvp.model.AppState
+import com.umbrella.weatherappmvvp.model.City
+import com.umbrella.weatherappmvvp.view.adapters.WeatherAdapter
+import com.umbrella.weatherappmvvp.view.hide
+import com.umbrella.weatherappmvvp.view.show
+import com.umbrella.weatherappmvvp.view.showSnackBar
+import com.umbrella.weatherappmvvp.view.showToast
 import com.umbrella.weatherappmvvp.viewmodel.MainActivityViewModel
+
+private val city1 = City("Москва", "55.75", "37.61")
+private val city2 = City("Санкт-Петербург", "59.93", "30.33")
+private val city3 = City("Якутск", "62.03", "129.67")
 
 class CitiesFragment : Fragment() {
 
     private var _binding: FragmentCitiesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainActivityViewModel
-    private var adapter: CitiesAdapter? = null
+    private val viewModel: MainActivityViewModel by lazy {
+        ViewModelProvider(this).get(MainActivityViewModel::class.java)
+    }
+    private var weatherInCitiesAdapter = WeatherAdapter()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+    companion object {
+        const val ARG_CITY = "city"
     }
 
     override fun onCreateView(
@@ -35,29 +46,43 @@ class CitiesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (adapter == null) {
-            initAdapterAndMakeApiCalls()
-        } else {
-            binding.recyclerViewCities.adapter = adapter
-            binding.loadingLayout.visibility = View.GONE
+        weatherInCitiesAdapter.setOnCityClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable(ARG_CITY, it)
+            findNavController().navigate(R.id.cityInfoFragment, bundle)
+        }
+
+        binding.recyclerViewCities.adapter = weatherInCitiesAdapter
+
+        if (weatherInCitiesAdapter.getData().isEmpty()) {
+            initObserver()
+            viewModel.makeApiCalls(city1, city2, city3)
         }
     }
 
-    private fun initAdapterAndMakeApiCalls() {
-        viewModel.getCitiesLiveData().observe(viewLifecycleOwner, {
-            adapter?.setCities(it)
-            binding.loadingLayout.visibility = View.GONE
+    private fun initObserver() {
+        viewModel.getDownloadStatusLiveData().observe(viewLifecycleOwner, { result ->
+            with(binding) {
+                when (result) {
+                    is AppState.Loading -> {
+                        loadingLayout.show()
+                    }
+                    is AppState.Success -> {
+                        loadingLayout.hide()
+                        appHeadline.text = getString(R.string.table_with_cities_headline_success)
+                        weatherInCitiesAdapter.setData(result.weatherData)
+                    }
+                    is AppState.Error -> {
+                        loadingLayout.hide()
+                        appHeadline.text = getString(R.string.table_with_cities_headline_error)
+                        root.showSnackBar(getString(R.string.error), getString(R.string.reload)) {
+                            viewModel.makeApiCalls(city1, city2, city3)
+                        }
+                        root.showToast(result.error.toString())
+                    }
+                }
+            }
         })
-        adapter = CitiesAdapter()
-        binding.recyclerViewCities.adapter = adapter
-        viewModel.makeApiCall("55.75", "37.61", "Москва")
-        viewModel.makeApiCall("59.93", "30.33", "Санкт-Петербург")
-        viewModel.makeApiCall("62.03", "129.67", "Якутск")
-        adapter?.setOnCityClickListener {
-            val bundle = Bundle()
-            bundle.putSerializable("city", it)
-            findNavController().navigate(R.id.cityInfoFragment, bundle)
-        }
     }
 
     override fun onDestroyView() {

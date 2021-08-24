@@ -1,6 +1,7 @@
 package com.umbrella.weatherappmvvp.view
 
 import android.view.View
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
 fun View.showSnackBar(text: String, actionText: String, action: (View) -> Unit){
@@ -20,4 +21,8 @@ fun View.hide(): View {
         visibility = View.GONE
     }
     return this
+}
+
+fun View.showToast(text: String) {
+    Toast.makeText(this.context, text, Toast.LENGTH_LONG).show()
 }

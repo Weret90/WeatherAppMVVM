@@ -6,21 +6,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.umbrella.weatherappmvvp.R
 import com.umbrella.weatherappmvvp.databinding.CityItemBinding
-import com.umbrella.weatherappmvvp.model.City
+import com.umbrella.weatherappmvvp.model.WeatherInCity
 import kotlin.collections.ArrayList
 
-class CitiesAdapter : RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
+class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.CitiesViewHolder>() {
 
-    private var cities: List<City> = ArrayList()
-    private var onCityClickListener: (City) -> Unit = {}
+    private var weatherInCities: List<WeatherInCity> = ArrayList()
+    private var onItemClick: (WeatherInCity) -> Unit = {}
 
-    fun setCities(cities: List<City>) {
-        this.cities = cities
+    fun setData(weatherInCities: List<WeatherInCity>) {
+        this.weatherInCities = weatherInCities
         notifyDataSetChanged()
     }
 
-    fun setOnCityClickListener(onCityClickListener: (City) -> Unit) {
-        this.onCityClickListener = onCityClickListener
+    fun getData() = weatherInCities
+
+    fun setOnCityClickListener(onCityClick: (WeatherInCity) -> Unit) {
+        this.onItemClick = onCityClick
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitiesViewHolder {
@@ -33,32 +35,32 @@ class CitiesAdapter : RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CitiesViewHolder, position: Int) {
-        holder.bind(cities[position])
+        holder.bind(weatherInCities[position])
     }
 
     override fun getItemCount(): Int {
-        return cities.size
+        return weatherInCities.size
     }
 
     inner class CitiesViewHolder(private val binding: CityItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(city: City) {
+        fun bind(weatherInCity: WeatherInCity) {
             with(binding) {
-                textViewName.text = city.cityName
-                textViewStatus.text = city.current.weather[0].description
+                textViewName.text = weatherInCity.city?.name
+                textViewStatus.text = weatherInCity.current.weather[0].description
                 textViewTemperature.text = String.format(
                     root.resources.getString(R.string.temperature_celsius),
-                    city.current.temp.toString()
+                    weatherInCity.current.temp.toString()
                 )
-                val icon = city.current.weather[0].icon
-                val iconUrl = "https://openweathermap.org/img/wn/$icon@2x.png"
+                val icon = weatherInCity.current.weather[0].icon
+                val iconUrl = String.format(root.resources.getString(R.string.icon_url_path), icon)
                 Picasso.get()
                     .load(iconUrl)
                     .into(iconImage)
 
                 root.setOnClickListener {
-                    onCityClickListener(city)
+                    onItemClick(weatherInCity)
                 }
             }
         }

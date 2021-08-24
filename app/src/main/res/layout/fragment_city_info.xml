@@ -4,21 +4,27 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaperweather">
+    android:background="@drawable/weather">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
 
     <TextView
         android:id="@+id/nameOfCity"
         style="@style/headline_style"
-        android:layout_marginTop="@dimen/big_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topGuideline"
         tool:text="Москва" />
 
     <TextView
         android:id="@+id/currentTemperature"
-        style="@style/headline_style"
-        android:textSize="@dimen/big_text_size"
+        style="@style/city_info_style"
+        android:textSize="@dimen/main_info_temp_text_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameOfCity"
@@ -26,8 +32,7 @@
 
     <TextView
         android:id="@+id/currentStatus"
-        style="@style/table_style"
-        android:layout_marginTop="@dimen/middle_margin"
+        style="@style/city_info_style"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentTemperature"
@@ -37,21 +42,27 @@
         android:id="@+id/iconBigImage"
         android:layout_width="@dimen/big_icon_size"
         android:layout_height="@dimen/big_icon_size"
-        android:layout_marginTop="@dimen/middle_margin"
+        android:layout_margin="@dimen/big_margin"
         android:contentDescription="@string/weather_icon_description"
+        app:layout_constraintBottom_toTopOf="@+id/table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentStatus" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottomGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
 
     <TableLayout
         android:id="@+id/table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/big_margin"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
 
         <TableRow
             android:layout_width="match_parent"

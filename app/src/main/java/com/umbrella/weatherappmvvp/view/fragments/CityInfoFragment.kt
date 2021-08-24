@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import com.umbrella.weatherappmvvp.R
 import com.umbrella.weatherappmvvp.databinding.FragmentCityInfoBinding
-import com.umbrella.weatherappmvvp.model.City
+import com.umbrella.weatherappmvvp.model.WeatherInCity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,10 +28,10 @@ class CityInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            val city = it.getSerializable("city") as City
+            val weatherInCity = it.getSerializable("city") as WeatherInCity
             with(binding) {
-                city.apply {
-                    nameOfCity.text = cityName
+                weatherInCity.apply {
+                    nameOfCity.text = city?.name
 
                     currentTemperature.text = String.format(
                         root.resources.getString(R.string.temperature_celsius),
@@ -54,7 +54,8 @@ class CityInfoFragment : Fragment() {
                     afterTomorrowDay.text = unixTimeConverter(daily[2].dt)
 
                     val icon = current.weather[0].icon
-                    val iconUrl = "https://openweathermap.org/img/wn/$icon@2x.png"
+                    val iconUrl =
+                        String.format(root.resources.getString(R.string.icon_url_path), icon)
                     Picasso.get()
                         .load(iconUrl)
                         .into(iconBigImage)

@@ -1,16 +1,21 @@
 package com.umbrella.weatherappmvvp.model
 
-
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class City(
-    var cityName: String = "",
+data class WeatherInCity(
+    var city: City? = null,
     @SerializedName("current")
     val current: Current,
     @SerializedName("daily")
     val daily: List<Daily>,
 ) : Serializable
+
+data class City(
+    val name: String,
+    val lat: String,
+    val lon: String
+)
 
 data class Current(
     @SerializedName("clouds")
